@@ -39,8 +39,7 @@ pipeline {
             steps {
                 script {
                     def folderName = params.SERVICE_NAME.replace("-service", "")
-                    // Chạy Maven để đóng gói code thành file .jar, bỏ qua bước Unit Test để tăng tốc độ CD
-                    sh "mvn clean package -f ./${folderName}/pom.xml -DskipTests"
+                    sh "mvn clean package -pl ${folderName} -am -DskipTests"
                 }
             }
         }
