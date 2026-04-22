@@ -1,0 +1,103 @@
+# Mặc định tất cả các service sẽ dùng tag này
+global:
+  defaultTag: "main"
+
+# NHÓM FRONTEND & GATEWAY
+
+storefront_ui:
+  image: "juzharii/storefront-nextjs"
+  tag: ""
+
+backoffice_ui:
+  image: "juzharii/backoffice-nextjs"
+  tag: ""
+
+storefront_bff_service:
+  image: "juzharii/storefront-bff-service"
+  tag: ""
+
+backoffice_bff_service:
+  image: "juzharii/backoffice-bff-service"
+  tag: ""
+
+identity_service:
+  image: "juzharii/identity-service" # Keycloak
+  tag: ""
+
+# NHÓM CÔNG CỤ HỖ TRỢ
+
+swagger_ui:
+  image: "swaggerapi/swagger-ui"
+  tag: ""
+
+pgadmin_tool:
+  image: "dpage/pgadmin4"
+  tag: ""
+
+# NHÓM BUSINESS SERVICES
+
+media_service:
+  image: "juzharii/media-service"
+  tag: ""
+
+product_service:
+  image: "juzharii/product-service"
+  tag: ""
+
+customer_service:
+  image: "juzharii/customer-service"
+  tag: ""
+
+cart_service:
+  image: "juzharii/cart-service"
+  tag: ""
+
+rating_service:
+  image: "juzharii/rating-service"
+  tag: ""
+
+order_service:
+  image: "juzharii/order-service"
+  tag: ""
+
+location_service:
+  image: "juzharii/location-service"
+  tag: ""
+
+inventory_service:
+  image: "juzharii/inventory-service"
+  tag: ""
+
+tax_service:
+  image: "juzharii/tax-service"
+  tag: ""
+
+search_service:
+  image: "juzharii/search-service"
+  tag: ""
+
+# NHÓM MỞ RỘNG (Từ source code GitHub)
+
+payment_service:
+  image: "juzharii/payment-service"
+  tag: ""
+
+promotion_service:
+  image: "juzharii/promotion-service"
+  tag: ""
+
+sampledata_service:
+  image: "juzharii/sampledata-service"
+  tag: ""
+
+payment_paypal_service:
+  image: "juzharii/payment-paypal-service"
+  tag: ""
+
+recommendation_service:
+  image: "juzharii/recommendation-service"
+  tag: ""
+
+webhook_service:
+  image: "juzharii/webhook-service"
+  tag: ""

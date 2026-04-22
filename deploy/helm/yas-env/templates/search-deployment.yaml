@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: search-service
+  template:
+    metadata:
+      labels:
+        app: search-service
+    spec:
+      containers:
+        - name: search-service
+          image: "{{ .Values.search_service.image }}:{{ default .Values.global.defaultTag .Values.search_service.tag }}"
+          ports:
+            - containerPort: 8080

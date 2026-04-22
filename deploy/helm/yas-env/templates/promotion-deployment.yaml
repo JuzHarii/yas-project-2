@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: promotion-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: promotion-service
+  template:
+    metadata:
+      labels:
+        app: promotion-service
+    spec:
+      containers:
+        - name: promotion-service
+          image: "{{ .Values.promotion_service.image }}:{{ default .Values.global.defaultTag .Values.promotion_service.tag }}"
+          ports:
+            - containerPort: 8080

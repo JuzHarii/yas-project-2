@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backoffice-bff-service
+spec:
+  type: NodePort
+  selector:
+    app: backoffice-bff-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30015

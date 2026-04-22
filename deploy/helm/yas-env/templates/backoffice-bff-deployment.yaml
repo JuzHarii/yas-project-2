@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backoffice-bff-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backoffice-bff-service
+  template:
+    metadata:
+      labels:
+        app: backoffice-bff-service
+    spec:
+      containers:
+        - name: backoffice-bff-service
+          image: "{{ .Values.backoffice_bff_service.image }}:{{ default .Values.global.defaultTag .Values.backoffice_bff_service.tag }}"
+          ports:
+            - containerPort: 8080

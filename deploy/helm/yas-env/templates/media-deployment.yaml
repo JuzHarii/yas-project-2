@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media-service
+  template:
+    metadata:
+      labels:
+        app: media-service
+    spec:
+      containers:
+        - name: media-service
+          image: "{{ .Values.media_service.image }}:{{ default .Values.global.defaultTag .Values.media_service.tag }}"
+          ports:
+            - containerPort: 8080

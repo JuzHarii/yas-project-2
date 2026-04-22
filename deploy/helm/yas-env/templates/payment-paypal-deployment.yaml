@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-paypal-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-paypal-service
+  template:
+    metadata:
+      labels:
+        app: payment-paypal-service
+    spec:
+      containers:
+        - name: payment-paypal-service
+          image: "{{ .Values.payment_paypal_service.image }}:{{ default .Values.global.defaultTag .Values.payment_paypal_service.tag }}"
+          ports:
+            - containerPort: 8080

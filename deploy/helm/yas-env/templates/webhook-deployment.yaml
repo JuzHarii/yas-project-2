@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhook-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webhook-service
+  template:
+    metadata:
+      labels:
+        app: webhook-service
+    spec:
+      containers:
+        - name: webhook-service
+          image: "{{ .Values.webhook_service.image }}:{{ default .Values.global.defaultTag .Values.webhook_service.tag }}"
+          ports:
+            - containerPort: 8080

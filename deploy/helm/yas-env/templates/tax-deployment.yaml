@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tax-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tax-service
+  template:
+    metadata:
+      labels:
+        app: tax-service
+    spec:
+      containers:
+        - name: tax-service
+          # ĐÂY LÀ ĐOẠN LOGIC QUAN TRỌNG NHẤT:
+          image: "{{ .Values.tax_service.image }}:{{ default .Values.global.defaultTag .Values.tax_service.tag }}"
+          ports:
+            - containerPort: 8080

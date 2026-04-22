@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storefront-bff-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: storefront-bff-service
+  template:
+    metadata:
+      labels:
+        app: storefront-bff-service
+    spec:
+      containers:
+        - name: storefront-bff-service
+          image: "{{ .Values.storefront_bff_service.image }}:{{ default .Values.global.defaultTag .Values.storefront_bff_service.tag }}"
+          ports:
+            - containerPort: 8080

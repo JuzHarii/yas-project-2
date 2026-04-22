@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sampledata-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sampledata-service
+  template:
+    metadata:
+      labels:
+        app: sampledata-service
+    spec:
+      containers:
+        - name: sampledata-service
+          image: "{{ .Values.sampledata_service.image }}:{{ default .Values.global.defaultTag .Values.sampledata_service.tag }}"
+          ports:
+            - containerPort: 8080
