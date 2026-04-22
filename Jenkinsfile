@@ -21,7 +21,8 @@ pipeline {
         stage('2. Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${params.SERVICE_NAME}/Dockerfile ."
+                    def folderName = params.SERVICE_NAME.replace("-service", "")
+                    sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${folderName}/Dockerfile ."
                 }
             }
         }
