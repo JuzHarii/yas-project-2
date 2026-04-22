@@ -39,9 +39,8 @@ pipeline {
             steps {
                 script {
                     def folderName = params.SERVICE_NAME.replace("-service", "")
-                    
                     sh """
-                    docker run --rm -v \${WORKSPACE}:/workspace -w /workspace maven:latest \
+                    docker run --rm --volumes-from jenkins-server -w \${WORKSPACE} maven:latest \
                     mvn clean package -pl ${folderName} -am -DskipTests
                     """
                 }
