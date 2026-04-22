@@ -2,7 +2,24 @@ pipeline {
     agent any
 
     parameters {
-        choice(name: 'SERVICE_NAME', choices: ['tax-service', 'cart-service', 'product-service', 'identity-service'], description: 'Chọn Service bạn vừa sửa code')
+        choice(name: 'SERVICE_NAME', 
+            choices: [
+                'tax-service', 
+                'cart-service', 
+                'product-service', 
+                'identity-service',
+                'media-service', 
+                'order-service', 
+                'rating-service', 
+                'customer-service', 
+                'location-service', 
+                'inventory-service', 
+                'search-service',
+                'payment-service', 
+                'promotion-service'
+            ], 
+            description: 'Chọn Service bạn vừa sửa code'
+        )
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Tên nhánh (branch) bạn muốn test (VD: dev_tax_service)')
     }
 
