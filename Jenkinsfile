@@ -51,8 +51,7 @@ pipeline {
             steps {
                 script {
                     def folderName = params.SERVICE_NAME.replace("-service", "")
-                    // Lúc này thư mục target đã được sinh ra, Docker sẽ build thành công
-                    sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${folderName}/Dockerfile ."
+                    sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${folderName}/Dockerfile ./${folderName}"
                 }
             }
         }
