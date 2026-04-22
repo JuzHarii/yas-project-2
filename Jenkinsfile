@@ -35,10 +35,21 @@ pipeline {
             }
         }
 
+        stage('1.5. Biên dịch Code Java (Maven)') {
+            steps {
+                script {
+                    def folderName = params.SERVICE_NAME.replace("-service", "")
+                    // Chạy Maven để đóng gói code thành file .jar, bỏ qua bước Unit Test để tăng tốc độ CD
+                    sh "mvn clean package -f ./${folderName}/pom.xml -DskipTests"
+                }
+            }
+        }
+
         stage('2. Build Docker Image') {
             steps {
                 script {
                     def folderName = params.SERVICE_NAME.replace("-service", "")
+                    // Lúc này thư mục target đã được sinh ra, Docker sẽ build thành công
                     sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${folderName}/Dockerfile ."
                 }
             }
