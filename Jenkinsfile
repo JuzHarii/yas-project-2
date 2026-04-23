@@ -58,8 +58,10 @@ pipeline {
 
         stage('3. Push Image lên Docker Hub') {
             steps {
-                script {
-                    sh "echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-id', 
+                                                passwordVariable: 'DOCKER_PASSWORD', 
+                                                usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
                     sh "docker push ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME}"
                 }
             }
@@ -69,7 +71,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    helm upgrade --install yas-release ./deploy/helm/yas-env \
+                    /usr/local/bin/helm upgrade --install yas-release ./deploy/helm/yas-env \
                     --set ${params.SERVICE_NAME}.tag=${params.BRANCH_NAME}
                     """
                 }
