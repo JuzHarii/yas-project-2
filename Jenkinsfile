@@ -74,7 +74,8 @@ pipeline {
                 script {
                     sh """
                     /usr/local/bin/helm upgrade --install yas-release ./deploy/helm/yas-env \
-                    --set ${params.SERVICE_NAME}.tag=${params.BRANCH_NAME}
+                    --set ${params.SERVICE_NAME}.tag=${params.BRANCH_NAME} \
+                    --kubeconfig /var/jenkins_home/.kube/config
                     """
                 }
             }
