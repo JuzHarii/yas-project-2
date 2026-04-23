@@ -47,11 +47,12 @@ pipeline {
             }
         }
 
-        stage('2. Build Docker Image') {
+        stage('2. Build Image') {
             steps {
                 script {
-                    def folderName = params.SERVICE_NAME.replace("-service", "")
-                    sh "docker build -t ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME} -f ./${folderName}/Dockerfile ./${folderName}"
+                    env.COMMIT_ID = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                    
+                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./services/${params.SERVICE_NAME}/Dockerfile ."
                 }
             }
         }
@@ -61,10 +62,9 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-id', 
                                                 passwordVariable: 'DOCKER_PASSWORD', 
                                                 usernameVariable: 'DOCKER_USERNAME')]) {
-                    
                     sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin 2>/dev/null'
                     
-                    sh "docker push ${DOCKER_USER}/${params.SERVICE_NAME}:${params.BRANCH_NAME}"
+                    sh "docker push juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID}"
                 }
             }
         }
@@ -74,7 +74,7 @@ pipeline {
                 script {
                     sh """
                     /usr/local/bin/helm upgrade --install yas-release ./deploy/helm/yas-env \
-                    --set ${params.SERVICE_NAME}.tag=${params.BRANCH_NAME} \
+                    --set ${params.SERVICE_NAME}.tag=${env.COMMIT_ID} \
                     --kubeconfig /var/jenkins_home/.kube/config
                     """
                 }
