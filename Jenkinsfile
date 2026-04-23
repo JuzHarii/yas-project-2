@@ -51,10 +51,10 @@ pipeline {
             steps {
                 script {
                     env.COMMIT_ID = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    
                     def folderName = params.SERVICE_NAME.replace("-service", "")
                     
-                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./${folderName}/Dockerfile ."
+                    
+                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./${folderName}/Dockerfile ./${folderName}"
                 }
             }
         }
