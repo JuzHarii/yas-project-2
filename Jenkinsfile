@@ -52,7 +52,7 @@ pipeline {
                 script {
                     env.COMMIT_ID = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                     
-                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./services/${params.SERVICE_NAME}/Dockerfile ."
+                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./${params.SERVICE_NAME}/Dockerfile ."
                 }
             }
         }
