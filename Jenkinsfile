@@ -35,11 +35,14 @@ pipeline {
             }
         }
 
-        stage('1.5. Compile Java Code') {
+        stage('1.5. Biên dịch Code Java (Maven)') {
             steps {
                 script {
                     def folderName = params.SERVICE_NAME.replace("-service", "")
-                    sh "./mvnw clean package -pl ${folderName} -am -DskipTests"
+                    sh """
+                    docker run --rm --volumes-from jenkins-server -w \${WORKSPACE} maven:latest \
+                    mvn clean package -pl ${folderName} -am -DskipTests
+                    """
                 }
             }
         }
@@ -48,9 +51,10 @@ pipeline {
             steps {
                 script {
                     env.COMMIT_ID = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                    
                     def folderName = params.SERVICE_NAME.replace("-service", "")
                     
-                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./${folderName}/Dockerfile ./${folderName}"
+                    sh "docker build -t juzharii/${params.SERVICE_NAME}:${env.COMMIT_ID} -f ./${folderName}/Dockerfile ."
                 }
             }
         }
