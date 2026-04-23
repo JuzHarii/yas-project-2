@@ -77,6 +77,8 @@ pipeline {
                     sh """
                     /usr/local/bin/helm upgrade --install yas-release ./deploy/helm/yas-env \
                     --set ${params.SERVICE_NAME}.tag=${env.COMMIT_ID} \
+                    --set ${params.SERVICE_NAME}.env.SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration \
+                    --set ${params.SERVICE_NAME}.env.SPRING_LIQUIBASE_ENABLED=false \
                     --kubeconfig /var/jenkins_home/.kube/config
                     """
                 }
