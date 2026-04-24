@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBECONFIG = '/var/jenkins_home/.kube/config'
+    }
+
+    stages {
+        stage('Dọn dẹp Cluster') {
+            steps {
+                script {
+                    sh '''
+                    echo "Đang tiến hành xóa tài nguyên triển khai"
+                    /usr/local/bin/helm uninstall yas-release || true
+                    echo "Dọn dẹp hoàn tất!"
+                    '''
+                }
+            }
+        }
+    }
+}
