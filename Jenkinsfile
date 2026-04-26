@@ -71,7 +71,7 @@ pipeline {
             }
         }
 
-        stage('4. CD - Cập nhật GitOps (ArgoCD lo phần Deploy)') {
+        stage('4. CD - ArgoCD lo phần Deploy') {
             steps {
                 script {
                     // Phân luồng môi trường dựa vào nhánh
