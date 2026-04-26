@@ -1,0 +1,126 @@
+# Mặc định tất cả các service sẽ dùng tag này
+global:
+  defaultTag: "main"
+
+# NHÓM FRONTEND & GATEWAY
+
+storefront_ui:
+  image: "juzharii/storefront-nextjs"
+  tag: ""
+  replicaCount: 2
+
+backoffice_ui:
+  image: "juzharii/backoffice-nextjs"
+  tag: ""
+  replicaCount: 2
+
+storefront_bff_service:
+  image: "juzharii/storefront-bff-service"
+  tag: ""
+  replicaCount: 2
+
+backoffice_bff_service:
+  image: "juzharii/backoffice-bff-service"
+  tag: ""
+  replicaCount: 2
+
+identity_service:
+  image: "juzharii/identity-service" # Keycloak
+  tag: ""
+  replicaCount: 2
+
+# NHÓM CÔNG CỤ HỖ TRỢ
+
+swagger_ui:
+  image: "swaggerapi/swagger-ui"
+  tag: ""
+  replicaCount: 2
+
+pgadmin_tool:
+  image: "dpage/pgadmin4"
+  tag: ""
+  replicaCount: 2
+
+# NHÓM BUSINESS SERVICES
+
+media_service:
+  image: "juzharii/media-service"
+  tag: ""
+  replicaCount: 2
+
+product_service:
+  image: "juzharii/product-service"
+  tag: ""
+  replicaCount: 2
+
+customer_service:
+  image: "juzharii/customer-service"
+  tag: ""
+  replicaCount: 2
+
+cart_service:
+  image: "juzharii/cart-service"
+  tag: ""
+  replicaCount: 2
+
+rating_service:
+  image: "juzharii/rating-service"
+  tag: ""
+  replicaCount: 2
+
+order_service:
+  image: "juzharii/order-service"
+  tag: ""
+  replicaCount: 2
+
+location_service:
+  image: "juzharii/location-service"
+  tag: ""
+  replicaCount: 2
+
+inventory_service:
+  image: "juzharii/inventory-service"
+  tag: ""
+  replicaCount: 2
+
+tax_service:
+  image: "juzharii/tax-service"
+  tag: ""
+  replicaCount: 2
+
+search_service:
+  image: "juzharii/search-service"
+  tag: ""
+  replicaCount: 2
+
+# NHÓM MỞ RỘNG (Từ source code GitHub)
+
+payment_service:
+  image: "juzharii/payment-service"
+  tag: ""
+  replicaCount: 2
+
+promotion_service:
+  image: "juzharii/promotion-service"
+  tag: ""
+  replicaCount: 2
+
+sampledata_service:
+  image: "juzharii/sampledata-service"
+  tag: ""
+  replicaCount: 2
+
+payment_paypal_service:
+  image: "juzharii/payment-paypal-service"
+  tag: ""
+  replicaCount: 2
+
+recommendation_service:
+  image: "juzharii/recommendation-service"
+  tag: ""
+  replicaCount: 2
+
+webhook_service:
+  image: "juzharii/webhook-service"
+  tag: ""
+  replicaCount: 2
