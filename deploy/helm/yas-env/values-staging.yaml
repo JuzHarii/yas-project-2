@@ -85,7 +85,7 @@ inventory_service:
 
 tax_service:
   image: "juzharii/tax-service"
-  tag: ""
+  tag: "f0443daa"
   replicaCount: 2
 
 search_service:
