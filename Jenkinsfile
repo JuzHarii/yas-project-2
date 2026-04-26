@@ -71,14 +71,36 @@ pipeline {
             }
         }
 
-        stage('4. CD - Deploy bằng Helm') {
+        stage('4. CD - Cập nhật GitOps (ArgoCD lo phần Deploy)') {
             steps {
                 script {
+                    // Phân luồng môi trường dựa vào nhánh
+                    def envFile = "values-dev.yaml" // Mặc định đẩy vào Dev
+                    if (params.BRANCH_NAME == "main" || params.BRANCH_NAME.startsWith("release")) {
+                        envFile = "values-staging.yaml" // Đẩy vào Staging nếu là nhánh main/release
+                    }
+
+                    echo "Đang cập nhật Tag ${env.COMMIT_ID} cho ${params.SERVICE_NAME} vào file ${envFile}"
+
+                    // Đồng bộ tên tax-service -> tax_service 
+                    def yamlKey = params.SERVICE_NAME.replace("-", "_")
+
+                    // Tìm đúng khối của service và thay thế dòng tag bên dưới nó
                     sh """
-                    /usr/local/bin/helm upgrade --install yas-release ./deploy/helm/yas-env \
-                    --set ${params.SERVICE_NAME}.tag=${env.COMMIT_ID} \
-                    --kubeconfig /var/jenkins_home/.kube/config
+                    sed -i '/^${yamlKey}:/,/tag:/ s/tag: .*/tag: "${env.COMMIT_ID}"/' ./deploy/helm/yas-env/${envFile}
                     """
+
+                    // Commit và Push lên GitHub
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                        sh """
+                        git config user.email "jenkins-bot@hcmus.edu.vn"
+                        git config user.name "Jenkins GitOps Bot"
+                        git add ./deploy/helm/yas-env/${envFile}
+                        git commit -m "Auto-update ${params.SERVICE_NAME} to version ${env.COMMIT_ID} in ${envFile}"
+                        
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/JuzHarii/yas-project-2.git HEAD:${params.BRANCH_NAME}
+                        """
+                    }
                 }
             }
         }
