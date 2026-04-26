@@ -45,7 +45,7 @@ pgadmin_tool:
 
 media_service:
   image: "juzharii/media-service"
-  tag: ""
+  tag: "4fe19549"
   replicaCount: 2
 
 product_service:
